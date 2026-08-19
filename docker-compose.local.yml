@@ -1,0 +1,16 @@
+# Local-only override: publishes the frontend on host port 80.
+#
+# docker-compose.yml alone uses `expose` (internal-only) so it's safe to
+# deploy under Coolify, where Traefik already owns host ports 80/443.
+# For local testing, layer this file on top:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
+#
+# Not named docker-compose.override.yml on purpose — that name gets merged
+# in automatically by any bare `docker compose` command, which would
+# reintroduce the port conflict if ever run against a Coolify-style setup.
+
+services:
+  frontend:
+    ports:
+      - "80:80"
