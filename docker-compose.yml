@@ -24,6 +24,87 @@ services:
       - "8000"
     env_file:
       - .env
+    environment:
+      # ── Application ──
+      APP_NAME: ${APP_NAME:-OASIS}
+      APP_ENV: ${APP_ENV:-development}
+      SECRET_KEY: ${SECRET_KEY:-change-me-to-a-random-secret-key}
+      DEBUG: ${DEBUG:-true}
+
+      # ── PostgreSQL (must match the postgres service below) ──
+      POSTGRES_USER: ${POSTGRES_USER:-oasis}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      POSTGRES_DB: ${POSTGRES_DB:-oasis}
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+
+      # ── Redis ──
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+
+      # ── AI Providers ──
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_USE_EU: ${OPENAI_USE_EU:-false}
+      DEEPGRAM_API_KEY: ${DEEPGRAM_API_KEY:-}
+      ELEVENLABS_API_KEY: ${ELEVENLABS_API_KEY:-}
+      CARTESIA_API_KEY: ${CARTESIA_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+
+      # ── Custom LLM (LiteLLM / OpenAI-compatible) ──
+      OPENAI_COMPATIBLE_LLM_URL: ${OPENAI_COMPATIBLE_LLM_URL:-}
+      OPENAI_COMPATIBLE_LLM_API_KEY: ${OPENAI_COMPATIBLE_LLM_API_KEY:-}
+
+      # ── Scaleway ──
+      SCALEWAY_SECRET_KEY: ${SCALEWAY_SECRET_KEY:-}
+      SCALEWAY_PROJECT_ID: ${SCALEWAY_PROJECT_ID:-}
+      SCALEWAY_API_URL: ${SCALEWAY_API_URL:-https://api.scaleway.ai/v1}
+
+      # ── Azure OpenAI ──
+      AZURE_OPENAI_API_KEY: ${AZURE_OPENAI_API_KEY:-}
+      AZURE_OPENAI_ENDPOINT: ${AZURE_OPENAI_ENDPOINT:-}
+      AZURE_OPENAI_API_VERSION: ${AZURE_OPENAI_API_VERSION:-2024-08-01-preview}
+
+      # ── GCP Vertex AI ──
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID:-}
+      GCP_LOCATION: ${GCP_LOCATION:-us-central1}
+      GCP_API_KEY: ${GCP_API_KEY:-}
+
+      # ── Smart-turn detection (remote endpoint, optional) ──
+      SMART_TURN_REMOTE_URL: ${SMART_TURN_REMOTE_URL:-}
+      SMART_TURN_REMOTE_API_KEY: ${SMART_TURN_REMOTE_API_KEY:-}
+
+      # ── Self-Hosted STT/TTS (OpenAI-compatible endpoints) ──
+      SELF_HOSTED_STT_URL: ${SELF_HOSTED_STT_URL:-}
+      SELF_HOSTED_STT_API_KEY: ${SELF_HOSTED_STT_API_KEY:-}
+      SELF_HOSTED_STT_MODEL: ${SELF_HOSTED_STT_MODEL:-whisper-1}
+      SELF_HOSTED_TTS_URL: ${SELF_HOSTED_TTS_URL:-}
+      SELF_HOSTED_TTS_API_KEY: ${SELF_HOSTED_TTS_API_KEY:-}
+      SELF_HOSTED_TTS_MODEL: ${SELF_HOSTED_TTS_MODEL:-tts-1}
+
+      # ── Embeddings / RAG ──
+      EMBEDDING_API_URL: ${EMBEDDING_API_URL:-}
+      EMBEDDING_API_KEY: ${EMBEDDING_API_KEY:-}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-}
+
+      # ── Telephony (Twilio) ──
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID:-}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN:-}
+      TWILIO_PHONE_NUMBER: ${TWILIO_PHONE_NUMBER:-}
+
+      # ── Dashboard authentication ──
+      AUTH_ENABLED: ${AUTH_ENABLED:-false}
+      AUTH_USERNAME: ${AUTH_USERNAME:-admin}
+      AUTH_PASSWORD: ${AUTH_PASSWORD:-}
+
+      # ── Voice audio recording storage ──
+      AUDIO_STORAGE_BACKEND: ${AUDIO_STORAGE_BACKEND:-local}
+      AUDIO_STORAGE_LOCAL_PATH: ${AUDIO_STORAGE_LOCAL_PATH:-/data/oasis-recordings}
+      AUDIO_S3_BUCKET: ${AUDIO_S3_BUCKET:-}
+      AUDIO_S3_PREFIX: ${AUDIO_S3_PREFIX:-oasis-recordings}
+      AUDIO_S3_REGION: ${AUDIO_S3_REGION:-us-east-1}
+      AUDIO_S3_ACCESS_KEY_ID: ${AUDIO_S3_ACCESS_KEY_ID:-}
+      AUDIO_S3_SECRET_ACCESS_KEY: ${AUDIO_S3_SECRET_ACCESS_KEY:-}
+      AUDIO_S3_ENDPOINT_URL: ${AUDIO_S3_ENDPOINT_URL:-}
     depends_on:
       postgres:
         condition: service_healthy
