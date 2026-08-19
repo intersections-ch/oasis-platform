@@ -1,21 +1,4 @@
 services:
-  # ── Reverse Proxy ──────────────────────────────────────────
-  caddy:
-    image: caddy:2-alpine
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-    depends_on:
-      - frontend
-      - backend
-    networks:
-      - oasis_net
-
   # ── Frontend ───────────────────────────────────────────────
   frontend:
     build:
@@ -23,8 +6,10 @@ services:
       dockerfile: Dockerfile
     image: oasis-frontend
     restart: unless-stopped
-    expose:
-      - "80"
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
     networks:
       - oasis_net
 
@@ -88,8 +73,6 @@ services:
 volumes:
   pgdata:
   redisdata:
-  caddy_data:
-  caddy_config:
 
 networks:
   oasis_net:
